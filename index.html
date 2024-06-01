@@ -63,7 +63,7 @@
     <script>
         async function fetchPrice() {
             try {
-                const response = await fetch('https://get-not.onrender.com/fetch_price');
+                const response = await fetch('https://get-not.onrender.com/fetch_price', {mode:'no-cors'});
                 const data = await response.text();
                 document.getElementById('price').innerText = data;
             } catch (error) {
