@@ -47,7 +47,7 @@
 </head>
 <script type="text/javascript">
     Telegram.WebApp.ready();
-    Telegram.WebApp.MainButton.setText('Send the price').show().onclick(function () {
+    Telegram.WebApp.MainButton.setText('Send the price').show().onClick(function () {
         const data = JSON.stringify({price: document.getElementById('price').innerText});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
