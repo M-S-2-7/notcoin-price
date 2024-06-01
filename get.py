@@ -26,9 +26,9 @@ def fetch_price():
 
     try:
         price = response_data['global']['binance']['not']
-        return {'price': price}, 200
+        return {'price': price}
     except KeyError:
-        return {'error': 'Error fetching price'}, 500
+        return {'error': 'Error fetching price'}
 
 @app.route('/fetch_price', methods=['GET'])
 def fetch_price_endpoint():
