@@ -22,15 +22,15 @@ def fetch_price():
         response = requests.post(url, headers=headers, data=json.dumps(data))
         response.raise_for_status()  # Raise an HTTPError on bad response
     except requests.RequestException as e:
-        return {'error': f'Error fetching price: {e}'}, 500
+        return f'Error fetching price: {e}'
 
     response_data = response.json()
 
     try:
         price = response_data['global']['binance']['not']
-        return {'price': price}
+        return price
     except KeyError:
-        return {'error': 'Error fetching price'}
+        return 'Error fetching price'
 
 @app.route('/fetch_price', methods=['GET'])
 def fetch_price_endpoint():
