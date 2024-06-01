@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notcoin Live Price</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #2A2F38;
+            color: #D1D1D1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #1E2023;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #00A6ED;
+        }
+        #price {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .refresh-button {
+            background-color: #00A6ED;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<script type="text/javascript">
+    Telegram.WebApp.ready();
+    Telegram.WebApp.MainButton.setText('Send the price').show().onclick(function () {
+        const data = JSON.stringify({price: document.getElementById('price').innerText});
+        Telegram.WebApp.sendData(data);
+        Telegram.WebApp.close();
+    });
+</script>
+<body>
+    <div class="container">
+        <h1>Notcoin Live Price</h1>
+        <div id="price">Loading...</div>
+        <button class="refresh-button" onclick="fetchPrice()">Refresh</button>
+    </div>
+
+    <script>
+        async function fetchPrice() {
+            try {
+                const response = await fetch('http://ms27.freehost.io/not/get.php');
+                const data = await response.text();
+                document.getElementById('price').innerText = data;
+            } catch (error) {
+                document.getElementById('price').innerText = 'Error fetching price';
+                console.error('Error:', error);
+            }
+        }
+
+        // Fetch the price on initial load
+        fetchPrice();
+
+        // Optionally, you can refresh the price every minute
+        setInterval(fetchPrice, 1000);
+    </script>
+</body>
+<script type="text/javascript">
+    Telegram.WebApp.expand();
+</script>
+</html>
